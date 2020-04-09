@@ -47,7 +47,7 @@ function [x_star, f_star, countIter] = golden(a, b, epsilon)
   
   while abs(b - a) >= epsilon
     countIter = countIter + 1;
-    if func(x2) > func(x1)
+    if func(x1) < func(x2)
       a = a;
       b = x2;
       x2 = x1;
