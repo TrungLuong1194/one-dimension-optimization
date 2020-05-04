@@ -29,7 +29,11 @@ function lab3()
     scatter(x_star, f_star, 200, 'g', 'x');
 
     hold off;
-    
+
+    [x, fval, ~, output] = fminbnd(@func, a, b);
+    fprintf('\n======== FMINBND ========\n');
+    fprintf('Number of iterations: %d\n', output.iterations);
+    fprintf('Minimum point: (%7.8f, %7.8f)\n', x, fval);
 end
 
 % Input function
@@ -86,7 +90,7 @@ function [x_begin, x_middle, y_middle, x_end, n] = golden_step(a, b, n_GR)
 end
 
 % Finding optimum point x
-function x = optimum_point(x1, y1, x2, y2, x3, y3)
+function x = optimum_point(x1, y1, x2, y2, x3, y3, epsilon)
     a1 = (y2 - y1) / (x2 - x1);
     a2 = ((y3 - y1)/(x3 - x1) - (y2 - y1)/(x2 - x1)) / (x3 - x2);
 
@@ -101,7 +105,7 @@ function [x_star, f_star, n] = parabol(a, b, epsilon, n_GR)
     
     y1 = func(x1);
     y3 = func(x3);
-    x = optimum_point(x1, y1, x2, y2, x3, y3);
+    x = optimum_point(x1, y1, x2, y2, x3, y3, epsilon);
     
     n = n + 2;
     flag = true;
@@ -145,7 +149,7 @@ function [x_star, f_star, n] = parabol(a, b, epsilon, n_GR)
                 end
             end
             
-            x = optimum_point(x1, y1, x2, y2, x3, y3);
+            x = optimum_point(x1, y1, x2, y2, x3, y3, epsilon);
             y = func(x);
             n = n + 1;
             
