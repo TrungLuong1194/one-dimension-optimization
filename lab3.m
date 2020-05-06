@@ -4,7 +4,7 @@ function lab3()
     a = -1;
     b = 0;
     epsilon = power(10, -6);
-    n_GR = 2;
+    n_GR = 6;
     
     % Draw graph function
     x = [-1 : 0.01 : 0];
@@ -38,9 +38,10 @@ end
 
 % Input function
 function y = func(x)
-    y1 = 2 * power(x, 5) - 7 * x + sqrt(11);
-    y2 = (-4*x*x - 4*x + 3 - 4*sqrt(2)) / (3*x*x + 3*x + 3*sqrt(2));
-    y = log(y1) + sinh(y2) - 1.0;
+%    y1 = 2 * power(x, 5) - 7 * x + sqrt(11);
+%    y2 = (-4*x*x - 4*x + 3 - 4*sqrt(2)) / (3*x*x + 3*x + 3*sqrt(2));
+%    y = log(y1) + sinh(y2) - 1.0;
+    y = (x + 0.777)^4;
 end
 
 % Using Golden section search to find x1, x2, x3
@@ -91,10 +92,14 @@ end
 
 % Finding optimum point x
 function x = optimum_point(x1, y1, x2, y2, x3, y3, epsilon)
-    a1 = (y2 - y1) / (x2 - x1);
-    a2 = ((y3 - y1)/(x3 - x1) - (y2 - y1)/(x2 - x1)) / (x3 - x2);
+    if abs(x1 - x3) > eps
+        a1 = (y2 - y1) / (x2 - x1);
+        a2 = ((y3 - y1)/(x3 - x1) - (y2 - y1)/(x2 - x1)) / (x3 - x2);
 
-    x = (x1 + x2 - a1/a2) / 2;
+        x = (x1 + x2 - a1/a2) / 2;
+    else
+        x = (x1 + x3) / 2;
+    end
 end
 
 % Parabol search function
